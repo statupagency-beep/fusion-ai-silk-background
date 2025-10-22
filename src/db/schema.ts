@@ -5,7 +5,7 @@ export const aiApps = pgTable('ai_apps', {
   name: text('name').notNull(),
   description: text('description').notNull(),
   iconName: text('icon_name').notNull(),
-  status: text('status').notNull(),
+  status: text('status').notNull().default('active'),
   usageCount: integer('usage_count').notNull().default(0),
   category: text('category').notNull(),
   gradient: text('gradient').notNull(),
