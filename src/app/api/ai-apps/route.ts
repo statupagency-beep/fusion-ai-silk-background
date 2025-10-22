@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { aiApps } from '@/db/schema';
-import { eq, like, or, and, desc } from 'drizzle-orm';
+import { eq, like, or, and, desc, sql } from 'drizzle-orm';
 
 export async function GET(request: NextRequest) {
   try {
@@ -48,9 +48,9 @@ export async function GET(request: NextRequest) {
     if (search) {
       conditions.push(
         or(
-          like(aiApps.name, `%${search}%`),
-          like(aiApps.description, `%${search}%`),
-          like(aiApps.category, `%${search}%`)
+          sql`${aiApps.name} ILIKE ${`%${search}%`}`,
+          sql`${aiApps.description} ILIKE ${`%${search}%`}`,
+          sql`${aiApps.category} ILIKE ${`%${search}%`}`
         )
       );
     }
@@ -144,8 +144,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Prepare insert data
-    const now = new Date().toISOString();
+    // Prepare insert data - PostgreSQL handles timestamps automatically
     const insertData = {
       name: name.trim(),
       description: description.trim(),
@@ -154,8 +153,6 @@ export async function POST(request: NextRequest) {
       usageCount: typeof usageCount === 'number' ? usageCount : 0,
       category: category.trim(),
       gradient: gradient.trim(),
-      createdAt: now,
-      updatedAt: now,
     };
 
     const newRecord = await db.insert(aiApps).values(insertData).returning();
@@ -201,10 +198,8 @@ export async function PUT(request: NextRequest) {
 
     const body = await request.json();
 
-    // Prepare update data - simplified approach
-    const updates: Record<string, any> = {
-      updatedAt: new Date().toISOString(),
-    };
+    // Prepare update data - PostgreSQL handles updatedAt automatically
+    const updates: Record<string, any> = {};
 
     // Validate and add fields if provided
     if (body.name !== undefined) {

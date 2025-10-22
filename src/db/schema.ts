@@ -1,7 +1,7 @@
-import { sqliteTable, integer, text } from 'drizzle-orm/sqlite-core';
+import { pgTable, serial, text, integer, timestamp } from 'drizzle-orm/pg-core';
 
-export const aiApps = sqliteTable('ai_apps', {
-  id: integer('id').primaryKey({ autoIncrement: true }),
+export const aiApps = pgTable('ai_apps', {
+  id: serial('id').primaryKey(),
   name: text('name').notNull(),
   description: text('description').notNull(),
   iconName: text('icon_name').notNull(),
@@ -9,6 +9,6 @@ export const aiApps = sqliteTable('ai_apps', {
   usageCount: integer('usage_count').notNull().default(0),
   category: text('category').notNull(),
   gradient: text('gradient').notNull(),
-  createdAt: text('created_at').notNull(),
-  updatedAt: text('updated_at').notNull(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
