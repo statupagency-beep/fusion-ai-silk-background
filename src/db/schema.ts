@@ -9,6 +9,6 @@ export const aiApps = pgTable('ai_apps', {
   usageCount: integer('usage_count').notNull().default(0),
   category: text('category').notNull(),
   gradient: text('gradient').notNull(),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+  createdAt: timestamp('created_at', { mode: 'date' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { mode: 'date' }).notNull().defaultNow(),
 });
