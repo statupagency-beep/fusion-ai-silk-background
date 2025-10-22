@@ -31,7 +31,7 @@ const iconMap: Record<string, any> = {
   Search,
   Image: ImageIcon,
   FileText,
-  Globe,
+  Globe
 };
 
 export default function HomePage() {
@@ -47,11 +47,11 @@ export default function HomePage() {
       setLoading(true);
       setError(null);
       const response = await fetch("/api/ai-apps?limit=100");
-      
+
       if (!response.ok) {
         throw new Error("Failed to fetch AI apps");
       }
-      
+
       const data = await response.json();
       setAiApps(data);
     } catch (err) {
@@ -73,7 +73,7 @@ export default function HomePage() {
     try {
       setDeletingId(id);
       const response = await fetch(`/api/ai-apps?id=${id}`, {
-        method: "DELETE",
+        method: "DELETE"
       });
 
       if (!response.ok) {
@@ -119,8 +119,8 @@ export default function HomePage() {
           loop
           muted
           playsInline
-          className="absolute top-0 left-0 w-full h-full object-cover"
-        >
+          className="absolute top-0 left-0 w-full h-full object-cover">
+
           <source src="https://framerusercontent.com/assets/Bax1SXv4b9QI33bMvkicABKnI.mp4" type="video/mp4" />
         </video>
       </div>
@@ -132,8 +132,8 @@ export default function HomePage() {
           alt="Background gradient overlay"
           fill
           className="object-cover opacity-100"
-          priority
-        />
+          priority />
+
       </div>
 
       <Navigation />
@@ -148,8 +148,8 @@ export default function HomePage() {
             </span>
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent">
-            Your AI Workspace
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent !whitespace-pre-line">Huy's Workspace
+
           </h1>
           
           <p className="text-xl text-white/70 max-w-2xl mx-auto mb-8">
@@ -181,85 +181,85 @@ export default function HomePage() {
           {/* Add Button */}
           <Button
             onClick={handleAdd}
-            className="bg-gradient-to-r from-[#FF6B35] to-[#1E90FF] text-white hover:scale-105 transition-transform shadow-lg shadow-[#FF6B35]/30"
-          >
+            className="bg-gradient-to-r from-[#FF6B35] to-[#1E90FF] text-white hover:scale-105 transition-transform shadow-lg shadow-[#FF6B35]/30">
+
             <Plus className="w-5 h-5 mr-2" />
             Add New AI App
           </Button>
         </div>
 
         {/* Loading State */}
-        {loading && (
-          <div className="flex items-center justify-center py-20">
+        {loading &&
+        <div className="flex items-center justify-center py-20">
             <Loader2 className="w-12 h-12 animate-spin text-[#FF6B35]" />
           </div>
-        )}
+        }
 
         {/* Error State */}
-        {error && (
-          <div className="max-w-md mx-auto p-6 rounded-2xl bg-red-500/10 border border-red-500/20 text-center">
+        {error &&
+        <div className="max-w-md mx-auto p-6 rounded-2xl bg-red-500/10 border border-red-500/20 text-center">
             <p className="text-red-400 mb-4">{error}</p>
             <Button
-              onClick={fetchApps}
-              variant="outline"
-              className="bg-transparent border-white/20 text-white hover:bg-white/5"
-            >
+            onClick={fetchApps}
+            variant="outline"
+            className="bg-transparent border-white/20 text-white hover:bg-white/5">
+
               Try Again
             </Button>
           </div>
-        )}
+        }
 
         {/* AI Apps Grid */}
-        {!loading && !error && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-20">
+        {!loading && !error &&
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-20">
             {aiApps.map((app) => {
-              const Icon = iconMap[app.iconName] || Code;
-              const isDeleting = deletingId === app.id;
+            const Icon = iconMap[app.iconName] || Code;
+            const isDeleting = deletingId === app.id;
 
-              return (
-                <div
-                  key={app.id}
-                  className="group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 hover:bg-white/[0.07] transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#FF6B35]/20"
-                >
+            return (
+              <div
+                key={app.id}
+                className="group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 hover:bg-white/[0.07] transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#FF6B35]/20">
+
                   {/* Action Buttons */}
                   <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button
-                      onClick={() => handleEdit(app)}
-                      disabled={isDeleting}
-                      className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
-                      title="Edit"
-                    >
+                    onClick={() => handleEdit(app)}
+                    disabled={isDeleting}
+                    className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+                    title="Edit">
+
                       <Pencil className="w-4 h-4 text-white" />
                     </button>
                     <button
-                      onClick={() => handleDelete(app.id)}
-                      disabled={isDeleting}
-                      className="p-2 rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors"
-                      title="Delete"
-                    >
-                      {isDeleting ? (
-                        <Loader2 className="w-4 h-4 text-white animate-spin" />
-                      ) : (
-                        <Trash2 className="w-4 h-4 text-white" />
-                      )}
+                    onClick={() => handleDelete(app.id)}
+                    disabled={isDeleting}
+                    className="p-2 rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors"
+                    title="Delete">
+
+                      {isDeleting ?
+                    <Loader2 className="w-4 h-4 text-white animate-spin" /> :
+
+                    <Trash2 className="w-4 h-4 text-white" />
+                    }
                     </button>
                   </div>
 
                   {/* Status Badge */}
                   <div className="absolute top-4 left-4">
                     <div
-                      className={`w-3 h-3 rounded-full ${
-                        app.status === "active"
-                          ? "bg-green-500 shadow-lg shadow-green-500/50"
-                          : "bg-gray-500"
-                      }`}
-                    />
+                    className={`w-3 h-3 rounded-full ${
+                    app.status === "active" ?
+                    "bg-green-500 shadow-lg shadow-green-500/50" :
+                    "bg-gray-500"}`
+                    } />
+
                   </div>
 
                   {/* Icon */}
                   <div
-                    className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${app.gradient} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 mt-6`}
-                  >
+                  className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${app.gradient} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 mt-6`}>
+
                     <Icon className="w-8 h-8 text-white" />
                   </div>
 
@@ -284,33 +284,33 @@ export default function HomePage() {
 
                   {/* Hover Gradient Border Effect */}
                   <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#FF6B35]/0 via-[#1E90FF]/0 to-[#FF6B35]/0 group-hover:from-[#FF6B35]/20 group-hover:via-[#1E90FF]/20 group-hover:to-[#FF6B35]/20 transition-all duration-500 pointer-events-none" />
-                </div>
-              );
-            })}
+                </div>);
+
+          })}
           </div>
-        )}
+        }
 
         {/* Empty State */}
-        {!loading && !error && aiApps.length === 0 && (
-          <div className="text-center py-20">
+        {!loading && !error && aiApps.length === 0 &&
+        <div className="text-center py-20">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/5 border border-white/10 mb-6">
               <Sparkles className="w-10 h-10 text-white/40" />
             </div>
             <h3 className="text-2xl font-bold mb-2">No AI Apps Yet</h3>
             <p className="text-white/60 mb-6">Get started by adding your first AI app</p>
             <Button
-              onClick={handleAdd}
-              className="bg-gradient-to-r from-[#FF6B35] to-[#1E90FF] text-white hover:scale-105 transition-transform"
-            >
+            onClick={handleAdd}
+            className="bg-gradient-to-r from-[#FF6B35] to-[#1E90FF] text-white hover:scale-105 transition-transform">
+
               <Plus className="w-5 h-5 mr-2" />
               Add Your First App
             </Button>
           </div>
-        )}
+        }
 
         {/* CTA Section */}
-        {!loading && !error && aiApps.length > 0 && (
-          <div className="relative text-center py-20">
+        {!loading && !error && aiApps.length > 0 &&
+        <div className="relative text-center py-20">
             {/* Gradient Orb */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-[#FF6B35]/30 to-[#1E90FF]/30 rounded-full blur-[120px] pointer-events-none" />
             
@@ -323,9 +323,9 @@ export default function HomePage() {
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
                 <button
-                  onClick={handleAdd}
-                  className="px-8 py-4 rounded-xl bg-gradient-to-r from-[#FF6B35] to-[#1E90FF] text-white font-medium hover:scale-105 transition-transform duration-300 shadow-lg shadow-[#FF6B35]/30"
-                >
+                onClick={handleAdd}
+                className="px-8 py-4 rounded-xl bg-gradient-to-r from-[#FF6B35] to-[#1E90FF] text-white font-medium hover:scale-105 transition-transform duration-300 shadow-lg shadow-[#FF6B35]/30">
+
                   Add More Apps
                 </button>
                 <button className="px-8 py-4 rounded-xl bg-transparent border border-white/20 text-white font-medium hover:bg-white/5 transition-all duration-300">
@@ -334,7 +334,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        )}
+        }
       </div>
 
       <Footer />
@@ -344,8 +344,8 @@ export default function HomePage() {
         open={dialogOpen}
         onOpenChange={handleDialogClose}
         app={editingApp}
-        onSuccess={handleSuccess}
-      />
-    </main>
-  );
+        onSuccess={handleSuccess} />
+
+    </main>);
+
 }
